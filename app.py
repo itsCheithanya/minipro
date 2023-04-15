@@ -15,6 +15,7 @@ while True:
 
     # Step 1: Query the data from Prometheus
     query = 'your_promql_query_here'
+    # irate(http_requests_total{method="GET", endpoint="/hello"}[1m])
     end_time = datetime.utcnow()
     start_time = end_time - timedelta(minutes=10) # last 10 data points
     step = '15s' # adjust this based on your data resolution
@@ -41,33 +42,10 @@ while True:
     # Step 4: Make predictions using the loaded model
     predictions = model.predict(input_data_scaled)
 
-    #step 5: calculate the number of pods required
+  
+    
 
-    system_running = True 
 
-    while system_running:
-        for cdt in CDT:
-            # Get predicted workload for next interval
-            workload_t_plus_one = Workloadt_plus_one
-            # Get current number of pods
-            pod_st_plus_one = pod
-            # Check if scaling out is required
-            if workload_t_plus_one > pod_st_plus_one:
-                # Execute scale out command
-                EXECUTE_SCALE_OUT_COMMAND(workload_t_plus_one)
-            # Check if scaling in is required
-            elif workload_t_plus_one < pod_st_plus_one:
-                # Calculate number of surplus pods
-                pod_surplus = max(pod_st - workload_t_plus_one, 0) * RRS
-                # Calculate new number of pods
-                pod_st_plus_one = max(workload_t_plus_one, podsmin)
-                pod_st_plus_one = max(pod_st - pod_surplus, pod_st_plus_one)
-                # Execute scale in command
-                EXECUTE_SCALE_IN_COMMAND(pod_st_plus_one)
-           # Do nothing if no scaling is required
-            else:
-                pass
-    sleep(INTERVAL)
             
 
     
